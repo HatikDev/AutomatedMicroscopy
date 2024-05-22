@@ -1,3 +1,6 @@
 [submodule "AnalyticsTool"]
 	path = AnalyticsTool
 	url = git@github.com:HatikDev/AnalyticsTool.git
+[submodule "AnalyticsTable"]
+	path = AnalyticsTable
+	url = git@github.com:HatikDev/AnalyticsTable.git
