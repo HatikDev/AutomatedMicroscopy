@@ -1,64 +1,56 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
-project(YOLOv8CPP)
+cmake_minimum_required(VERSION 3.5)
+project(ModelLauncher)
 
-SET (OpenCV_DIR C:/opencv/opencv/build/x64/vc15/lib)  # opencv lib root
-SET (OpenCV_BIN_DIR C:/opencv/opencv/build/x64/vc15/bin)  #opencv bin root
+set(OpenCV_DIR C:/opencv/opencv/build/x64/vc16/lib)
+set(OpenCV_BIN_DIR C:/opencv/opencv/build/x64/vc16/bin)
 
-SET (OpenCV_DEBUG_DLL_FILENAME opencv_world451d.dll)
-SET (OpenCV_RELEASE_DLL_FILENAME opencv_world451.dll)
+set(OpenCV_DEBUG_DLL_FILENAME opencv_world490d.dll)
+set(OpenCV_RELEASE_DLL_FILENAME opencv_world490.dll)
 
-SET (ONNXRUNTIME_DIR C:/onnx/onnxruntime-win-x64-1.17.1)  # onnxruntime root
+set(ONNXRUNTIME_DIR C:/onnx/onnxruntime-win-x64-1.17.3)
 
-FIND_PACKAGE(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED)
 
-# --- Configure your project files ---
-include_directories(include)  # Include your header files directory
+include_directories(include)
 
-# Recursively collect all source files under 'src' directory
 file(GLOB_RECURSE CURR_SOURCES src/*.cpp)
 
-# Create the executable
-add_executable(YOLOv8CPP ${CURR_SOURCES})
+add_executable(${PROJECT_NAME} ${CURR_SOURCES})
 
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-TARGET_INCLUDE_DIRECTORIES(YOLOv8CPP PRIVATE "${ONNXRUNTIME_DIR}/include")
+TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PRIVATE "${ONNXRUNTIME_DIR}/include")
 
-target_compile_features(YOLOv8CPP PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
-TARGET_LINK_LIBRARIES(YOLOv8CPP ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${OpenCV_LIBS})
 
 if (WIN32)
-    TARGET_LINK_LIBRARIES(YOLOv8CPP "${ONNXRUNTIME_DIR}/lib/onnxruntime.lib")
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} "${ONNXRUNTIME_DIR}/lib/onnxruntime.lib")
 
-    # some changes to the original version:
-    #   copy onnxruntime dll
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${ONNXRUNTIME_DIR}/lib/onnxruntime.dll"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
             )
-    #   copy opencv
-#[[    add_custom_command(TARGET YOLOv8CPP POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${OpenCV_DIR}/${OpenCV_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
-            )]]
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+            )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${OpenCV_BIN_DIR}/${OpenCV_DEBUG_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
             )
-    # add release
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${OpenCV_BIN_DIR}/${OpenCV_RELEASE_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
             )
-
 endif(WIN32)
 
 if (UNIX)
-    TARGET_LINK_LIBRARIES(YOLOv8CPP "${ONNXRUNTIME_DIR}/lib/libonnxruntime.so")
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} "${ONNXRUNTIME_DIR}/lib/libonnxruntime.so")
 endif(UNIX)
