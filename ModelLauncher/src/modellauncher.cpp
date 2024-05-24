@@ -18,7 +18,6 @@ namespace fs = std::filesystem;
 namespace {
     std::unique_ptr<AutoBackendOnnx> model; // TODO: replace by pointer to base class
 
-// TODO: move them somewhere
     const char* kOnnxLogid = "yolov8_inference2";
     const char* onnxProvider = OnnxProviders::CPU;
 
@@ -44,11 +43,11 @@ namespace {
 
 namespace loader
 {
-    void __cdecl loadModel(const char* modelPath) {
+    void __cdecl loadModel(const char* modelPath, const char* datasetPath) {
         if (model)
             return; // TODO: add throwing exception if the model already was loaded
 
-        model = std::make_unique<AutoBackendOnnx>(modelPath, kOnnxLogid, onnxProvider);
+        model = std::make_unique<AutoBackendOnnx>(modelPath, datasetPath, kOnnxLogid, onnxProvider);
     }
 
     void __cdecl predict(const char* input, const char* output) {

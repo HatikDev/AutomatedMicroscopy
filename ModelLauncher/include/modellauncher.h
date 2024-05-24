@@ -25,7 +25,7 @@ extern "C"
 #define LOADERAPI __declspec(dllimport)
 #endif
 
-        LOADERAPI void __cdecl loadModel(const char* path);
+        LOADERAPI void __cdecl loadModel(const char* modelPath, const char* datasetPath);
         LOADERAPI void __cdecl predict(const char* input, const char* output);
         LOADERAPI void __cdecl unloadModel();
     }

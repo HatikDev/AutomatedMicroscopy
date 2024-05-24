@@ -29,11 +29,11 @@ struct ImageInfo {
 class AutoBackendOnnx : public OnnxModelBase {
 public:
     // constructors
-    AutoBackendOnnx(const char* modelPath, const char* logid, const char* provider,
-        const std::vector<int>& imgsz, const int& stride,
-        const int& nc, std::unordered_map<int, std::string> names);
+    //AutoBackendOnnx(const char* modelPath, const char* logid, const char* provider,
+    //    const std::vector<int>& imgsz, const int& stride,
+    //    const int& nc, std::unordered_map<int, std::string> names);
 
-    AutoBackendOnnx(const char* modelPath, const char* logid, const char* provider);
+    AutoBackendOnnx(const char* modelPath, const char* datasetPath, const char* logid, const char* provider);
 
     // getters
     virtual const std::vector<int>& getImgsz();

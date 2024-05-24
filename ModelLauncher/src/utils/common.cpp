@@ -5,7 +5,6 @@
 #include "utils/common.h"
 
 #include <chrono>
-//#include <boost/algorithm/string.hpp>
 
 #include <iostream>
 #include <stdio.h>
@@ -14,8 +13,6 @@
 
 #include <regex>
 #include <vector>
-
-
 
 Timer::Timer(double& accumulator, bool isEnabled)
     : accumulator(accumulator), isEnabled(isEnabled) {
@@ -88,34 +85,6 @@ std::vector<int> convertStringVectorToInts(const std::vector<std::string>& input
 
     return result;
 }
-
-
-/*
-std::unordered_map<int, std::string> parseNames(const std::string& input) {
-    std::unordered_map<int, std::string> result;
-
-    std::string cleanedInput = input;
-    boost::erase_all(cleanedInput, "{");
-    boost::erase_all(cleanedInput, "}");
-
-    std::vector<std::string> elements;
-    boost::split(elements, cleanedInput, boost::is_any_of(","));
-
-    for (const std::string& element : elements) {
-        std::vector<std::string> keyValue;
-        boost::split(keyValue, element, boost::is_any_of(":"));
-
-        if (keyValue.size() == 2) {
-            int key = std::stoi(boost::trim_copy(keyValue[0]));
-            std::string value = boost::trim_copy(keyValue[1]);
-
-            result[key] = value;
-        }
-    }
-
-    return result;
-}
-*/
 
 std::unordered_map<int, std::string> parseNames(const std::string& input) {
     std::unordered_map<int, std::string> result;
