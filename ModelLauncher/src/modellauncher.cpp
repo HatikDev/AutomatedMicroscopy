@@ -36,7 +36,7 @@ namespace {
             float x1 = (obj.bbox.x + obj.bbox.width) / kWidth;
             float y1 = (obj.bbox.y + obj.bbox.height) / kHeight;
 
-            file << "1 " << x0 << " " << y0 << " " << x1 << " " << y1 << std::endl;
+            file << obj.class_idx << " " << x0 << " " << y0 << " " << x1 << " " << y1 << std::endl;
         }
     }
 }
