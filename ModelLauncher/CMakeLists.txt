@@ -7,7 +7,7 @@ set(OpenCV_BIN_DIR C:/opencv/opencv/build/x64/vc16/bin)
 set(OpenCV_DEBUG_DLL_FILENAME opencv_world490d.dll)
 set(OpenCV_RELEASE_DLL_FILENAME opencv_world490.dll)
 
-set(ONNXRUNTIME_DIR C:/onnx/onnxruntime-win-x64-1.17.3)
+set(ONNXRUNTIME_DIR C:/onnx/onnxruntime-win-x64-1.18.0)
 
 find_package(OpenCV REQUIRED)
 
